@@ -1,5 +1,9 @@
 # Connect 4 Agent
-In this project, your task is to create an agent (a game player) that can play Connect 4. Connect 4 is a popular board game, similar to an extended version of Tic-Tac-Toe. Note that all of the graphical components (e.g., game board, pieces, etc.) you will need for this project have already been created for you, so you will not need to build any yourself. You will only need to implement your agent’s game-playing logic.
+In this project, your task is to create an agent (a game player) that can play Connect 4.
+Connect 4 is a popular board game, similar to an extended version of Tic-Tac-Toe. Note that
+all of the graphical components (e.g., game board, pieces, etc.) you will need for this project
+have already been created for you, so you will not need to build any yourself. You will only
+need to implement your agent’s game-playing logic.
 
 **[Rules of the Game](#rules-of-the-game)**<br>
 **[The Project Architecture](#the-project-architecture)**<br>
@@ -8,7 +12,11 @@ In this project, your task is to create an agent (a game player) that can play C
 **[Further Reading](#further-reading)**<br>
 
 # Rules of the Game
-Connect 4 involves two players, a ‘red’ player and a ‘yellow’ player, playing against each other. The game is played on a vertical grid with six rows and seven columns. The players take turns placing pieces of their color, called ‘tokens’, into the board. The goal of each player is to get four of his or her tokens in a row in the board, either horizontally, vertically, or diagonally. For example, below are three winning arrangements of pieces from the game you will be using.
+Connect 4 involves two players, a ‘red’ player and a ‘yellow’ player, playing against each other.
+The game is played on a vertical grid with six rows and seven columns. The players take turns placing
+pieces of their color, called ‘tokens’, into the board. The goal of each player is to get four of his or
+her tokens in a row in the board, either horizontally, vertically, or diagonally. For example,
+below are three winning arrangements of pieces from the game you will be using.
 
 ![Image of Horizontal Win](./images/horizontalWin.png)
 
@@ -16,8 +24,11 @@ Connect 4 involves two players, a ‘red’ player and a ‘yellow’ player, pl
 
 ![Image of Diagonal Win](./images/diagonalWin.png)
 
-  Connect 4 is played on a vertical board, meaning that pieces are “dropped” into the board. So, players may only ever place their token in the top unfilled slot in a column. The above three are examples of valid boards because no token is located above an
-empty slot. The board below would be an invalid board because there are empty slots beneath some of the tokens:
+  Connect 4 is played on a vertical board, meaning that pieces are “dropped” into the board.
+  So, players may only ever place their token in the top unfilled slot in a column. The above three
+   are examples of valid boards because no token is located above an
+empty slot. The board below would be an invalid board because there are empty slots beneath some
+of the tokens:
 
 ![Image of Invalid Board](./images/invalidBoard.png)
 
@@ -56,9 +67,12 @@ In addition to the above methods, we’ve also provided the headers for three ot
 You are, of course, free and encouraged to write your own methods as well! You can even write additional classes if you would like to in order to help your agent play Connect 4 as well as it can.
 
 # Playing Your Agent
-Once you have an agent that can play the game, go to Main.java and set one (or both) of the players in the game to your agent. This will allow your agent to play the game. Then, run Main, and you’ll be able to watch your agent play.
+Once you have an agent that can play the game, go to Main.java and set one (or both) of the players in the game to your agent. This will allow
+your agent to play the game. Then, run Main, and you’ll be able to watch your agent play.
 
-You can also run the test suite to see if it can beat the RandomAgent and BeginnerAgent 9 out of 10 times on average. Sometimes the test will timeout and you'll get a red x. Try running the test again until you either get a blue x or green check. If you run the tests 3-5 times and each time you're getting a red x, then something is probably wrong with your code.
+You can also run the test suite to see if it can beat the RandomAgent and BeginnerAgent 9 out of 10 times on average.
+Sometimes the test will timeout and you'll get a red x. Try running the test again until you either get a blue x or green check.
+If you run the tests 3-5 times and each time you're getting a red x, then something is probably wrong with your code.
 
 ## Important
 When you run the game, you will see the screen below:
