@@ -1,3 +1,5 @@
+import com.sun.jdi.connect.Connector;
+
 import java.util.Random;
 /**
  * Describe your basic strategy here.
@@ -9,7 +11,7 @@ public class MyAgent extends Agent {
    * A random number generator to randomly decide where to place a token.
    */
   private Random random;
-
+  private char[][] board;
   /**
    * Constructs a new agent, giving it the game and telling it whether it is Red or Yellow.
    *
@@ -41,6 +43,21 @@ public class MyAgent extends Agent {
    *
    */
   public void move() {
+    if(getLowestEmptyIndex(myGame.getColumn(3)) == 5 ) { //takes middle spot
+      moveOnColumn(3);
+    }
+    else if(iCanWin() != -1){ //wins
+      moveOnColumn(iCanWin());
+    }
+    else if(theyCanWin() != -1){ //blocks
+      moveOnColumn(theyCanWin());
+    }
+    else if (bestPlay() != -1){ //creates groups of twos
+      moveOnColumn(bestPlay());
+    }
+    else{ //random move
+      moveOnColumn(randomMove());
+    }
 
   }
 
@@ -109,21 +126,97 @@ public class MyAgent extends Agent {
    * @return the column that would allow the agent to win.
    */
   public int iCanWin() {
-    return 0;
+
+    for(int x = 0; x < 7; x++) {
+      Connect4Game gameCopy = new Connect4Game(myGame);
+      MyAgent agentCopy = new MyAgent(gameCopy, iAmRed);
+      agentCopy.moveOnColumn(x);
+        if (gameCopy.gameWon() == 'R' && iAmRed) { //if I am red and can win
+          return x;
+        }
+        if (gameCopy.gameWon() == 'Y' && !iAmRed) { //if I am yellow and can win
+          System.out.println(x);
+          return x;
+        }
+    }
+    return -1; //just a value that is not a column so i can tell when it returns nothing
   }
 
-  /**
-   * Returns the column that would allow the opponent to win.
-   *
-   * <p>You might want your agent to check to see if the opponent would have any winning moves
-   * available so your agent can block them. Implement this method to return what column should
-   * be blocked to prevent the opponent from winning.</p>
-   *
-   * @return the column that would allow the opponent to win.
-   */
-  public int theyCanWin() {
-    return 0;
+  public int theyCanWin(){
+
+    for(int x = 0; x < 7; x++) {
+      Connect4Game gameCopy = new Connect4Game(myGame);
+      MyAgent agentCopy = new MyAgent(gameCopy, !iAmRed);
+      agentCopy.moveOnColumn(x);
+      if (gameCopy.gameWon() == 'R' && agentCopy.iAmRed){ //if I am red and they can win
+        return x;
+      }
+      if(gameCopy.gameWon() == 'Y' && !agentCopy.iAmRed){ //if I am yellow and they can win
+        return x;
+      }
+    }
+    return -1; //just a value that is not a column so i can tell when it returns nothing
   }
+
+  public int bestPlay(){ //creates groupings of two which lead to wins
+    board = myGame.getBoardMatrix();
+    char myTeam;
+    if (iAmRed){
+      myTeam = 'R';
+    }
+    else{
+      myTeam = 'Y';
+    }
+    //prioritizes diagonals and left
+    for (int x = 0; x < 6; x ++) { //moves diagonal left
+      int height = getLowestEmptyIndex(myGame.getColumn(x));
+      if (height != 5 && height > 0) {
+        if (board[height + 1][x + 1] == myTeam) {
+          System.out.println("diagonal left");
+          return x;
+        }
+      }
+    }
+    for(int x = 1; x < 7; x++) { //moves to the left of a piece
+      int height = getLowestEmptyIndex(myGame.getColumn(x - 1));
+      if (height > 0) {
+        if (board[height][x] == myTeam) {
+          System.out.println("left");
+          return x - 1;
+        }
+      }
+    }
+    for (int x = 0; x < 7; x ++) { //moves to top of piece
+      int height = getLowestEmptyIndex(myGame.getColumn(x));
+      if (height != 5 && height > 0) {
+        if (board[height + 1][x] == myTeam) {
+          System.out.println("top");
+          return x;
+        }
+      }
+    }
+    for (int x = 1; x < 7; x ++) { //moves diagonal right
+      int height = getLowestEmptyIndex(myGame.getColumn(x));
+      if (height != 5 && height > 0) {
+        if (board[height + 1][x - 1] == myTeam) {
+          System.out.println("diagonal right");
+          return x;
+        }
+      }
+    }
+    for(int x = 0; x < 6; x++) { //moves to the right of a piece
+      int height = getLowestEmptyIndex(myGame.getColumn(x + 1));
+      if (height > 0) {
+        if (board[height][x] == myTeam) {
+          System.out.println("right");
+          return x + 1;
+        }
+      }
+    }
+
+      return - 1;
+    }
+
 
   /**
    * Returns the name of this agent.
